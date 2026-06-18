@@ -78,10 +78,10 @@ export const SEED_CLIENTS: Client[] = [
     phone: "+49 30 6612 3300",
     notes: "Waiting on 2024 annual accounts & Q4 bank statements.",
     checklist: [
-      { label: "Managing director ID", done: true },
-      { label: "Opening balance sheet", done: true },
-      { label: "2024 bank statements", done: false },
-      { label: "ELSTER authorization", done: false },
+      { id: "t1", label: "Managing director ID", done: true, assignee: "TK" },
+      { id: "t2", label: "Opening balance sheet", done: true, assignee: "TK" },
+      { id: "t3", label: "2024 bank statements", done: false, assignee: "TK" },
+      { id: "t4", label: "ELSTER authorization", done: false, assignee: null },
     ],
   },
   {
@@ -97,9 +97,9 @@ export const SEED_CLIENTS: Client[] = [
     phone: "+49 30 4455 7781",
     notes: "ELSTER access pending. 2024 receipts requested.",
     checklist: [
-      { label: "Tax identification number", done: true },
-      { label: "2024 receipts", done: false },
-      { label: "ELSTER authorization", done: false },
+      { id: "t5", label: "Tax identification number", done: true, assignee: "SW" },
+      { id: "t6", label: "2024 receipts", done: false, assignee: "SW" },
+      { id: "t7", label: "ELSTER authorization", done: false, assignee: null },
     ],
   },
 

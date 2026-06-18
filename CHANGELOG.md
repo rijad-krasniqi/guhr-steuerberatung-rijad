@@ -3,6 +3,45 @@
 All notable changes to the Guhr client-onboarding board are recorded here.
 Format loosely follows [Keep a Changelog](https://keepachangelog.com/).
 
+## [1.1.0] — 2026-06-18
+
+Tasks, assignment, and an audit trail — turning the board from a static layout
+into a working tool people are accountable for.
+
+### Added — tasks on cards
+- Required-document items are now editable **tasks**: add a task to any card,
+  remove it, and check it off. Tasks are no longer fixed seed data.
+- Each task can be **assigned to an advisor**, so it's clear who owns what.
+- `ChecklistItem` gained `id` and `assignee` fields.
+
+### Added — advisor assignment
+- The detail panel's advisor field is now an editable selector (it was
+  read-only). A card can be assigned, reassigned, or unassigned.
+
+### Added — activity trail / admin panel
+- New append-only **activity log** records every meaningful change — moves,
+  priority/mandate/advisor changes, task add/remove/complete/assign, detail and
+  notes edits, card creation, and board reset — with who, what, and when.
+- New **Activity** panel (opened from the header) shows the trail newest-first,
+  grouped by day, with relative timestamps.
+- New **"Acting as"** identity switcher in the header stamps each change with the
+  acting advisor, so the trail is meaningful without a full auth system.
+
+### Added — richer new-client flow
+- Replaced the name-only inline add with a **new-client modal** that captures
+  name, business descriptor, mandate type, advisor, priority, contact details,
+  and target phase. New cards open straight into the detail panel to finish up.
+
+### Changed — editable everywhere
+- Client name, business descriptor, email, and phone are now inline-editable in
+  the detail panel (commit on blur, so the trail logs one edit, not one per key).
+- Mandate type is now editable from the detail panel.
+- Persistence key bumped to `guhr.onboarding.board.v2` (state now also stores the
+  activity log and current user).
+
+### Removed
+- The inline `AddCardForm` component (superseded by the new-client modal).
+
 ## [1.0.0] — 2026-06-18
 
 Initial build of the client-onboarding Kanban board, rebuilt from the design

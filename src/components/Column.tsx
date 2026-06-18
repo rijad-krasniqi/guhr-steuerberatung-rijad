@@ -1,7 +1,5 @@
-import { useState } from "react";
 import type { Client, ColumnId } from "../lib/types";
 import { Card } from "./Card";
-import { AddCardForm } from "./AddCardForm";
 
 interface ColumnProps {
   id: ColumnId;
@@ -12,16 +10,13 @@ interface ColumnProps {
   draggingId: string | null;
   /** True when a drag is hovering this column (highlights the drop zone). */
   isDropTarget: boolean;
-  /** Whether the add form was opened here via the header's "New inquiry" button. */
-  openAddForm: boolean;
   onCardOpen: (id: string) => void;
   onCardDragStart: (id: string) => void;
   onCardDragEnd: () => void;
   onDragOver: () => void;
   onDrop: () => void;
-  onAddCard: (name: string) => void;
-  /** Called once the externally-requested add form has been shown. */
-  onAddFormConsumed: () => void;
+  /** Open the new-client form pre-targeted to this column. */
+  onAddCard: () => void;
 }
 
 /** A single pipeline phase: header with live count, scrollable cards, add-card footer. */
@@ -31,30 +26,14 @@ export function Column({
   cards,
   draggingId,
   isDropTarget,
-  openAddForm,
   onCardOpen,
   onCardDragStart,
   onCardDragEnd,
   onDragOver,
   onDrop,
   onAddCard,
-  onAddFormConsumed,
 }: ColumnProps) {
-  const [adding, setAdding] = useState(false);
-
-  // The header's "New inquiry" button opens the add form in the New Inquiry
-  // column from outside; honor that request once, then clear the flag.
-  if (openAddForm && !adding) {
-    setAdding(true);
-    onAddFormConsumed();
-  }
-
   const countActive = cards.length > 0 && !paused;
-
-  const submit = (name: string) => {
-    onAddCard(name);
-    setAdding(false);
-  };
 
   return (
     <div className={paused ? "column column--paused" : "column"}>
@@ -92,13 +71,9 @@ export function Column({
       </div>
 
       <div className="column__foot">
-        {adding ? (
-          <AddCardForm onSubmit={submit} onCancel={() => setAdding(false)} />
-        ) : (
-          <button className="add-trigger" onClick={() => setAdding(true)}>
-            <span className="plus">+</span> Add a card
-          </button>
-        )}
+        <button className="add-trigger" onClick={onAddCard}>
+          <span className="plus">+</span> Add a card
+        </button>
       </div>
     </div>
   );
