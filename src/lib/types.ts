@@ -54,7 +54,12 @@ export interface Client {
   notes: string;
   /** Required-documents / task checklist, or null when the card has none. */
   checklist: ChecklistItem[] | null;
+  /** Archived cards are hidden from the board but kept (restorable). */
+  archived?: boolean;
 }
+
+/** Board filter: show all cards, only unassigned, or one advisor's cards. */
+export type AdvisorFilter = "all" | "unassigned" | MemberId;
 
 /** Fields collected by the "new client" form when a card is created. */
 export interface NewClientDraft {
@@ -82,6 +87,9 @@ export type ActivityType =
   | "task_done"
   | "task_undone"
   | "task_assigned"
+  | "archived"
+  | "unarchived"
+  | "deleted"
   | "reset";
 
 /**

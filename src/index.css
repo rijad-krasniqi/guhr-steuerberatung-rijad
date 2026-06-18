@@ -657,18 +657,18 @@ select:focus {
 
 /* ---- Header: "acting as" switcher + secondary buttons ------------------ */
 
-.user-switch {
+.picker {
   display: flex;
   align-items: center;
   gap: 7px;
   cursor: pointer;
 }
-.user-switch__caption {
+.picker__caption {
   font-size: 11px;
   color: #9a9082;
   white-space: nowrap;
 }
-.user-switch__select {
+.picker__select {
   border: 1px solid #e7e1d6;
   background: #fbfaf7;
   border-radius: 7px;
@@ -676,7 +676,14 @@ select:focus {
   font-size: 12.5px;
   color: #3a352e;
   cursor: pointer;
-  max-width: 130px;
+  max-width: 140px;
+}
+/* Tinted when a filter is active, so it's obvious the board is narrowed. */
+.picker__select--active {
+  border-color: var(--gold);
+  background: #f7efdc;
+  color: #8a6d1c;
+  font-weight: 600;
 }
 
 .btn-secondary {
@@ -1057,4 +1064,81 @@ select:focus {
 .task-add__btn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+/* ---- Lifecycle actions: danger button + archived list ------------------ */
+
+.btn-danger {
+  background: #fff;
+  color: #c25b4e;
+  border: 1px solid #e7c9c4;
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-family: "Work Sans", sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+.btn-danger:hover {
+  background: #fbf1f0;
+  border-color: #d99e96;
+}
+
+.btn-ghost--sm {
+  padding: 5px 11px;
+  font-size: 12px;
+}
+.btn-danger-link {
+  background: transparent;
+  border: none;
+  color: #c08a83;
+  font-family: "Work Sans", sans-serif;
+  font-weight: 600;
+  font-size: 12px;
+  cursor: pointer;
+  padding: 5px 6px;
+}
+.btn-danger-link:hover {
+  color: #c25b4e;
+}
+
+.arch-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 11px 2px;
+  border-top: 1px solid #f1ece1;
+}
+.arch-info {
+  min-width: 0;
+}
+.arch-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.arch-name {
+  font-family: "Work Sans", sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  color: #2b2724;
+}
+.arch-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 5px;
+  font-size: 11.5px;
+  color: #8e8576;
+}
+.arch-meta .dot {
+  color: #d9d2c5;
+}
+.arch-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex: 0 0 auto;
 }

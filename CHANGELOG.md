@@ -3,6 +3,22 @@
 All notable changes to the Guhr client-onboarding board are recorded here.
 Format loosely follows [Keep a Changelog](https://keepachangelog.com/).
 
+## [1.2.0] — 2026-06-18
+
+### Added — advisor filtering
+- A **View** filter in the header narrows the board to a single advisor's cards
+  (or Unassigned), so a colleague can focus on just their own work. Column counts
+  and the header total reflect the filtered view, and the control is tinted while
+  a filter is active. Creating a client clears the filter so the new card shows.
+
+### Added — archive & delete
+- Cards can be **archived** (hidden from the board but kept) from the detail
+  panel, and **deleted** permanently (with confirmation).
+- New **Archived** panel (header button, with a live count) lists archived
+  clients and lets you **restore** or **delete** them.
+- `Client` gained an optional `archived` flag; both actions are recorded in the
+  activity trail (new `archived` / `unarchived` / `deleted` entry types).
+
 ## [1.1.0] — 2026-06-18
 
 Tasks, assignment, and an audit trail — turning the board from a static layout

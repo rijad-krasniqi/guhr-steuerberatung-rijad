@@ -88,8 +88,9 @@ src/
     Column.tsx            # One phase: header + count, card list, add-card footer
     Card.tsx              # A single client card
     NewClientModal.tsx    # New-client form (name, mandate, advisor, priority, contact, phase)
-    DetailPanel.tsx       # Slide-in side panel: editable fields, assignment, task manager
+    DetailPanel.tsx       # Slide-in side panel: editable fields, assignment, tasks, archive/delete
     ActivityPanel.tsx     # Slide-in audit trail (the "admin" view)
+    ArchivedPanel.tsx     # Slide-in list of archived clients (restore / delete)
     Avatar.tsx            # Advisor avatar (shared across the app)
 public/assets/            # Guhr logo (color + white)
 ```
@@ -125,10 +126,16 @@ are applied inline from `brand.ts`; everything static lives in `index.css`.
   uses to track outstanding paperwork.
 - **Assignment** — both the card's advisor and individual tasks can be assigned,
   so it's always clear who owns the next step.
+- **Advisor filter** — a header **View** control narrows the board to one
+  advisor's cards (or Unassigned), so a colleague can focus on just their own
+  work. Counts reflect the filtered view; the control is tinted while active.
+- **Archive & delete** — archive a card from the detail panel to hide it from the
+  board without losing it, or delete it permanently (with confirmation). The
+  **Archived** panel lists archived clients to restore or delete.
 - **Activity trail (admin panel)** — an append-only audit log of every meaningful
   change (moves, priority/mandate/advisor changes, task edits, detail/notes
-  edits, creation, reset), shown newest-first and grouped by day. Open it from the
-  header's **Activity** button.
+  edits, creation, archive, delete, reset), shown newest-first and grouped by day.
+  Open it from the header's **Activity** button.
 - **"Acting as" identity** — a header switcher sets the current advisor; every
   change is attributed to them in the trail. In a real deployment this would come
   from authentication — here it's a simple switcher so the audit trail is

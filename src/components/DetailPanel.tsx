@@ -335,6 +335,30 @@ export function DetailPanel({
             />
           </div>
         </div>
+
+        {/* ---- Lifecycle actions ---- */}
+        <div className="panel__foot">
+          <button
+            className="btn-ghost"
+            onClick={() => {
+              board.archiveClient(id);
+              onClose();
+            }}
+          >
+            Archive
+          </button>
+          <button
+            className="btn-danger"
+            onClick={() => {
+              if (confirm(`Permanently delete “${client.name}”? This cannot be undone.`)) {
+                board.deleteClient(id);
+                onClose();
+              }
+            }}
+          >
+            Delete
+          </button>
+        </div>
       </div>
     </div>
   );

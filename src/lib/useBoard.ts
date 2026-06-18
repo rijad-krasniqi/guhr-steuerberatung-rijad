@@ -89,6 +89,12 @@ export interface BoardApi {
 
   /** Create a client from the new-client form; returns the new id. */
   addClient: (draft: NewClientDraft) => string;
+  /** Archive a card (hidden from the board, kept and restorable). */
+  archiveClient: (id: string) => void;
+  /** Restore an archived card to the board. */
+  unarchiveClient: (id: string) => void;
+  /** Permanently remove a card. */
+  deleteClient: (id: string) => void;
   resetBoard: () => void;
   clearActivity: () => void;
 }
@@ -329,6 +335,7 @@ export function useBoard(): BoardApi {
       phone: draft.phone.trim(),
       notes: "",
       checklist: null,
+      archived: false,
     };
     setState((s) => {
       const entry: ActivityEntry = {
@@ -343,6 +350,51 @@ export function useBoard(): BoardApi {
       return { ...s, clients: [...s.clients, card], activity: [entry, ...s.activity] };
     });
     return id;
+  }, []);
+
+  const archiveClient = useCallback(
+    (id: string) =>
+      mutate(id, (card) =>
+        card.archived
+          ? null
+          : { card: { ...card, archived: true }, type: "archived", message: `archived “${card.name}”` },
+      ),
+    [mutate],
+  );
+
+  const unarchiveClient = useCallback(
+    (id: string) =>
+      mutate(id, (card) =>
+        !card.archived
+          ? null
+          : {
+              card: { ...card, archived: false },
+              type: "unarchived",
+              message: `restored “${card.name}” from the archive`,
+            },
+      ),
+    [mutate],
+  );
+
+  const deleteClient = useCallback((id: string) => {
+    setState((s) => {
+      const card = s.clients.find((c) => c.id === id);
+      if (!card) return s;
+      const entry: ActivityEntry = {
+        id: uid("a"),
+        timestamp: Date.now(),
+        actor: s.currentUser,
+        type: "deleted",
+        cardId: card.id,
+        cardName: card.name,
+        message: `permanently deleted “${card.name}”`,
+      };
+      return {
+        ...s,
+        clients: s.clients.filter((c) => c.id !== id),
+        activity: [entry, ...s.activity],
+      };
+    });
   }, []);
 
   const resetBoard = useCallback(() => {
@@ -380,6 +432,9 @@ export function useBoard(): BoardApi {
     toggleTask,
     assignTask,
     addClient,
+    archiveClient,
+    unarchiveClient,
+    deleteClient,
     resetBoard,
     clearActivity,
   };

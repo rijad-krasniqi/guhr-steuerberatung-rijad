@@ -17,6 +17,9 @@ const ICON: Record<ActivityType, { glyph: string; color: string }> = {
   task_done: { glyph: "✓", color: "#287A67" },
   task_undone: { glyph: "↺", color: "#A79D8E" },
   task_assigned: { glyph: "@", color: "#5E4894" },
+  archived: { glyph: "▢", color: "#8E8576" },
+  unarchived: { glyph: "↩", color: "#287A67" },
+  deleted: { glyph: "✕", color: "#C25B4E" },
   reset: { glyph: "↺", color: "#A79D8E" },
 };
 
