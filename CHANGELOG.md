@@ -3,6 +3,19 @@
 All notable changes to the Guhr client-onboarding board are recorded here.
 Format loosely follows [Keep a Changelog](https://keepachangelog.com/).
 
+## [1.2.1] — 2026-06-18
+
+### Changed — resilient header
+- Moved the secondary actions (Activity log, Archived, Reset) into a compact
+  **"⋯" overflow menu** so the header no longer overflows or breaks when the
+  window is narrowed.
+- Made the header responsive: it sheds the lowest-value chrome first as space
+  tightens (picker captions, then the client/phase stats, then the brand
+  subtitle), keeping the filter, "acting as", New inquiry, and menu usable.
+
+### Removed
+- Unused `.btn-secondary` / `.linklike` styles (superseded by the overflow menu).
+
 ## [1.2.0] — 2026-06-18
 
 ### Added — advisor filtering

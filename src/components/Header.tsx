@@ -1,6 +1,7 @@
 import type { AdvisorFilter, MemberId } from "../lib/types";
 import { MEMBER_IDS, MEMBERS } from "../lib/brand";
 import { Avatar } from "./Avatar";
+import { OverflowMenu } from "./OverflowMenu";
 
 /**
  * App header: brand lockup, live pipeline stats, the advisor **filter**, the
@@ -103,18 +104,22 @@ export function Header({
 
         <div className="header__divider" />
 
-        <button className="btn-secondary" onClick={onOpenActivity}>
-          Activity
-        </button>
-        <button className="btn-secondary" onClick={onOpenArchived}>
-          Archived{archivedCount > 0 ? ` · ${archivedCount}` : ""}
-        </button>
-        <button className="linklike" onClick={onReset} title="Restore the original sample data">
-          Reset
-        </button>
         <button className="btn-primary" onClick={onNewInquiry}>
           <span className="plus">+</span> New inquiry
         </button>
+
+        {/* Secondary actions live in an overflow menu so the header stays intact
+            when the window is narrowed. */}
+        <OverflowMenu
+          items={[
+            { label: "Activity log", onClick: onOpenActivity },
+            {
+              label: archivedCount > 0 ? `Archived (${archivedCount})` : "Archived",
+              onClick: onOpenArchived,
+            },
+            { label: "Reset board", onClick: onReset, danger: true },
+          ]}
+        />
       </div>
     </header>
   );
