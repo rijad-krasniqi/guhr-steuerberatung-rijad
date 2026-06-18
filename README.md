@@ -83,13 +83,15 @@ src/
   data/
     seedClients.ts        # 11 realistic German sample clients from the design
   components/
-    Header.tsx            # Brand lockup, live stats, "New inquiry", Reset
+    Header.tsx            # Brand lockup, live stats, "acting as" switcher, Activity, New inquiry
     Board (in App.tsx)    # Lays out the seven columns
     Column.tsx            # One phase: header + count, card list, add-card footer
     Card.tsx              # A single client card
-    AddCardForm.tsx       # Inline "add a card" input
-    DetailPanel.tsx       # Slide-in side panel with all editable fields
-    Avatar.tsx            # Advisor avatar (shared by card + panel)
+    NewClientModal.tsx    # New-client form (name, mandate, advisor, priority, contact, phase)
+    DetailPanel.tsx       # Slide-in side panel: editable fields, assignment, tasks, archive/delete
+    ActivityPanel.tsx     # Slide-in audit trail (the "admin" view)
+    ArchivedPanel.tsx     # Slide-in list of archived clients (restore / delete)
+    Avatar.tsx            # Advisor avatar (shared across the app)
 public/assets/            # Guhr logo (color + white)
 ```
 
@@ -112,16 +114,47 @@ are applied inline from `brand.ts`; everything static lives in `index.css`.
   indicator (dots + "X / N complete").
 - **Drag-and-drop** between columns with no page reload. The dragged card dims;
   the hovered column highlights as a drop target.
-- **Detail panel** — a slide-in side panel showing email, phone, advisor, date
-  added, a **phase** dropdown, a **priority** selector (High / Standard / Low),
-  an **interactive required-documents checklist** with live progress, and an
-  **editable notes / next-steps** field. Every edit is live and persisted.
-  Closes on overlay click or Escape.
-- **Add a card** inline in any column, plus a header "New inquiry" shortcut that
-  opens the add form in the New Inquiry column.
+- **Detail panel** — a slide-in side panel where every field is editable: inline
+  name / descriptor / email / phone, a **phase** dropdown, a **mandate** selector,
+  an **advisor** selector (assign / reassign / unassign), a **priority** selector
+  (High / Standard / Low), the **task manager** (below), and an **editable notes /
+  next-steps** field. Every edit is live, persisted, and recorded in the activity
+  trail. Closes on overlay click or Escape.
+- **Tasks & required documents** — on any card you can **add tasks**, check them
+  off, remove them, and **assign each task to an advisor**. The card shows live
+  progress (dots + "X / N complete"). This is what the Documents Requested phase
+  uses to track outstanding paperwork.
+- **Assignment** — both the card's advisor and individual tasks can be assigned,
+  so it's always clear who owns the next step.
+- **Advisor filter** — a header **View** control narrows the board to one
+  advisor's cards (or Unassigned), so a colleague can focus on just their own
+  work. Counts reflect the filtered view; the control is tinted while active.
+- **Archive & delete** — archive a card from the detail panel to hide it from the
+  board without losing it, or delete it permanently (with confirmation). The
+  **Archived** panel lists archived clients to restore or delete.
+- **Activity trail (admin panel)** — an append-only audit log of every meaningful
+  change (moves, priority/mandate/advisor changes, task edits, detail/notes
+  edits, creation, archive, delete, reset), shown newest-first and grouped by day.
+  Open it from the header's **Activity** button.
+- **"Acting as" identity** — a header switcher sets the current advisor; every
+  change is attributed to them in the trail. In a real deployment this would come
+  from authentication — here it's a simple switcher so the audit trail is
+  meaningful in the demo (see below).
+- **New-client flow** — the header "New inquiry" button and each column's "Add a
+  card" open a modal that captures name, descriptor, mandate, advisor, priority,
+  contact details, and phase; the new card then opens for finishing touches.
 - **Persistence** — all changes survive a refresh via `localStorage`; **Reset**
   restores the seeded sample data.
 - **Accessible motion** — panel animations respect `prefers-reduced-motion`.
+
+### A note on roles & the audit trail
+
+The activity trail answers "who moved what, and when." For it to mean anything,
+each change needs an actor. Rather than build a login system for a local demo,
+the header has an **"Acting as"** switcher that sets the current advisor; all
+changes are stamped with that identity. The logging itself lives in one place
+(`useBoard.ts`), so swapping the switcher for real authenticated users later is a
+localized change — the components and the log format don't need to move.
 
 ---
 

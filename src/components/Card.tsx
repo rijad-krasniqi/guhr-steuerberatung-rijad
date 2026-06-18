@@ -84,9 +84,9 @@ export function Card({ client, paused, dragging, onOpen, onDragStart, onDragEnd 
       {checklist && checklist.length > 0 && (
         <div className="card__checklist">
           <div className="card__dots">
-            {checklist.map((item, i) => (
+            {checklist.map((item) => (
               <span
-                key={i}
+                key={item.id}
                 className="dot-square"
                 style={{
                   background: item.done ? "#c3a35b" : "#fff",

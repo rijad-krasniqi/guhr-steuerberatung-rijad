@@ -151,7 +151,7 @@ select:focus {
 .header__right {
   display: flex;
   align-items: center;
-  gap: 18px;
+  gap: 14px;
 }
 .header__stats {
   display: flex;
@@ -315,51 +315,6 @@ select:focus {
   font-size: 15px;
   line-height: 1;
   margin-top: -1px;
-}
-
-.add-form {
-  background: #fff;
-  border: 1px solid #e2d9c8;
-  border-radius: 9px;
-  padding: 9px;
-}
-.add-form__input {
-  width: 100%;
-  border: none;
-  background: transparent;
-  font-size: 13px;
-  color: #2b2724;
-  padding: 3px 2px;
-}
-.add-form__row {
-  display: flex;
-  gap: 7px;
-  margin-top: 8px;
-  align-items: center;
-}
-.add-form__submit {
-  background: var(--gold);
-  color: #fff;
-  border: none;
-  border-radius: 6px;
-  padding: 6px 13px;
-  font-size: 12px;
-  font-weight: 600;
-  cursor: pointer;
-  font-family: "Work Sans", sans-serif;
-  transition: background 0.15s;
-}
-.add-form__submit:hover {
-  background: var(--gold-hover);
-}
-.add-form__cancel {
-  background: transparent;
-  color: #a79d8e;
-  border: none;
-  padding: 6px;
-  font-size: 14px;
-  cursor: pointer;
-  line-height: 1;
 }
 
 /* ---- Card --------------------------------------------------------------- */
@@ -693,4 +648,497 @@ select:focus {
 }
 .checklist__label {
   font-size: 13px;
+}
+
+/* ======================================================================
+ * Additions: identity switcher, secondary/ghost buttons, new-client modal,
+ * activity trail, inline-editable fields, and the task manager.
+ * ====================================================================== */
+
+/* ---- Header: "acting as" switcher + secondary buttons ------------------ */
+
+.picker {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  cursor: pointer;
+}
+.picker__caption {
+  font-size: 11px;
+  color: #9a9082;
+  white-space: nowrap;
+}
+.picker__select {
+  border: 1px solid #e7e1d6;
+  background: #fbfaf7;
+  border-radius: 7px;
+  padding: 5px 8px;
+  font-size: 12.5px;
+  color: #3a352e;
+  cursor: pointer;
+  max-width: 140px;
+}
+/* Tinted when a filter is active, so it's obvious the board is narrowed. */
+.picker__select--active {
+  border-color: var(--gold);
+  background: #f7efdc;
+  color: #8a6d1c;
+  font-weight: 600;
+}
+
+.btn-secondary {
+  background: #fff;
+  color: #7c6f55;
+  border: 1px solid #e2d9c8;
+  border-radius: 22px;
+  padding: 8px 15px;
+  font-family: "Work Sans", sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+.btn-secondary:hover {
+  background: #f6f2e9;
+  border-color: #d8cdb6;
+}
+
+.btn-ghost {
+  background: transparent;
+  color: #8e8576;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-family: "Work Sans", sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+}
+.btn-ghost:hover {
+  background: #f1ece1;
+  color: #6e665b;
+}
+
+.btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* ---- New-client modal --------------------------------------------------- */
+
+.overlay--center {
+  justify-content: center;
+  align-items: center;
+}
+.modal {
+  width: 480px;
+  max-width: 92vw;
+  max-height: 88vh;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 24px 60px rgba(40, 30, 10, 0.26);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: fadeIn 0.16s ease;
+}
+.modal__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid #eee7da;
+  flex: 0 0 auto;
+}
+.modal__title {
+  font-family: "Work Sans", sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  color: #2b2724;
+}
+.modal__body {
+  padding: 18px 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.modal__foot {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 14px 20px;
+  border-top: 1px solid #eee7da;
+  flex: 0 0 auto;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.form-field .field-label {
+  margin-bottom: 0;
+}
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+.input {
+  width: 100%;
+  border: 1px solid #e2d9c8;
+  border-radius: 8px;
+  padding: 9px 11px;
+  font-size: 13px;
+  color: #3a352e;
+  background: #fbfaf7;
+}
+.input:focus {
+  border-color: var(--gold);
+  background: #fff;
+}
+
+/* Close button for the modal's flex header (sits inline on the right). */
+.modal__close {
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: 50%;
+  background: #f1ece1;
+  color: #8e8576;
+  font-size: 13px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+}
+.modal__close:hover {
+  background: #e7ddc9;
+}
+
+/* ---- Activity (audit) panel -------------------------------------------- */
+
+.panel__head--plain {
+  background: #2b2724;
+  color: #fff;
+}
+.panel__eyebrow {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #c3a35b;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.panel__name--dark {
+  color: #fff;
+}
+.panel__sub--dark {
+  color: rgba(255, 255, 255, 0.66);
+}
+
+.activity-group {
+  margin-bottom: 14px;
+}
+.activity-day {
+  position: sticky;
+  top: -20px;
+  background: #fff;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.7px;
+  color: #a79d8e;
+  font-weight: 700;
+  padding: 6px 0;
+  z-index: 1;
+}
+.activity-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  padding: 9px 2px;
+  border-top: 1px solid #f1ece1;
+}
+.activity-icon {
+  flex: 0 0 14px;
+  text-align: center;
+  font-weight: 800;
+  font-size: 13px;
+  line-height: 20px;
+}
+.activity-text {
+  flex: 1;
+  font-size: 12.5px;
+  color: #4a443c;
+  line-height: 1.45;
+}
+.activity-actor {
+  font-weight: 700;
+  color: #2b2724;
+}
+.activity-time {
+  flex: 0 0 auto;
+  font-size: 10.5px;
+  color: #a79d8e;
+  white-space: nowrap;
+  margin-top: 2px;
+}
+.activity-empty {
+  color: #a79d8e;
+  font-size: 13px;
+  text-align: center;
+  padding: 40px 0;
+}
+.panel__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 22px;
+  border-top: 1px solid #eee7da;
+  flex: 0 0 auto;
+}
+.panel__foot-note {
+  font-size: 12px;
+  color: #a79d8e;
+}
+
+/* ---- Detail panel: inline-editable fields ------------------------------ */
+
+/* Editable name/descriptor that sit on the gold header. */
+.panel__name-input {
+  width: 100%;
+  border: none;
+  background: transparent;
+  color: #fff;
+  font-family: "Work Sans", sans-serif;
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 1.15;
+  padding: 1px 3px;
+  margin: 0 0 0 -3px;
+  border-radius: 5px;
+}
+.panel__name-input:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+.panel__name-input:focus {
+  background: rgba(255, 255, 255, 0.18);
+}
+.panel__name-input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+.panel__sub-input {
+  width: 100%;
+  border: none;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 13px;
+  padding: 2px 3px;
+  margin: 3px 0 0 -3px;
+  border-radius: 5px;
+}
+.panel__sub-input:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+.panel__sub-input:focus {
+  background: rgba(255, 255, 255, 0.18);
+}
+.panel__sub-input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* Editable text that reads like plain text until hovered/focused. */
+.inline-input {
+  width: 100%;
+  border: 1px solid transparent;
+  background: transparent;
+  border-radius: 6px;
+  font-size: 13px;
+  color: #3a352e;
+  padding: 4px 6px;
+  margin-left: -6px;
+}
+.inline-input:hover {
+  border-color: #ece5d6;
+  background: #fbfaf7;
+}
+.inline-input:focus {
+  border-color: var(--gold);
+  background: #fff;
+}
+.inline-input::placeholder {
+  color: #b8af9d;
+}
+
+.select--inline {
+  padding: 6px 8px;
+}
+
+/* ---- Tasks -------------------------------------------------------------- */
+
+.task {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: 8px;
+}
+.task:hover {
+  background: #f6f2e9;
+}
+.task__main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  padding: 8px 4px 8px 9px;
+}
+.task__controls {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding-right: 6px;
+  flex: 0 0 auto;
+}
+.select--task {
+  padding: 4px 6px;
+  font-size: 11.5px;
+  max-width: 116px;
+  border-radius: 6px;
+}
+.task__delete {
+  width: 22px;
+  height: 22px;
+  border: none;
+  background: transparent;
+  color: #c3b8a3;
+  font-size: 12px;
+  cursor: pointer;
+  border-radius: 5px;
+  flex: 0 0 auto;
+}
+.task__delete:hover {
+  background: #f3e2e2;
+  color: #c25b4e;
+}
+
+.task-add {
+  display: flex;
+  gap: 7px;
+  margin-top: 9px;
+}
+.task-add__input {
+  flex: 1;
+  border: 1px solid #e2d9c8;
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-size: 12.5px;
+  color: #3a352e;
+  background: #fbfaf7;
+}
+.task-add__input:focus {
+  border-color: var(--gold);
+  background: #fff;
+}
+.task-add__btn {
+  background: var(--gold);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-size: 12.5px;
+  font-weight: 600;
+  font-family: "Work Sans", sans-serif;
+  cursor: pointer;
+}
+.task-add__btn:hover {
+  background: var(--gold-hover);
+}
+.task-add__btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ---- Lifecycle actions: danger button + archived list ------------------ */
+
+.btn-danger {
+  background: #fff;
+  color: #c25b4e;
+  border: 1px solid #e7c9c4;
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-family: "Work Sans", sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+.btn-danger:hover {
+  background: #fbf1f0;
+  border-color: #d99e96;
+}
+
+.btn-ghost--sm {
+  padding: 5px 11px;
+  font-size: 12px;
+}
+.btn-danger-link {
+  background: transparent;
+  border: none;
+  color: #c08a83;
+  font-family: "Work Sans", sans-serif;
+  font-weight: 600;
+  font-size: 12px;
+  cursor: pointer;
+  padding: 5px 6px;
+}
+.btn-danger-link:hover {
+  color: #c25b4e;
+}
+
+.arch-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 11px 2px;
+  border-top: 1px solid #f1ece1;
+}
+.arch-info {
+  min-width: 0;
+}
+.arch-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.arch-name {
+  font-family: "Work Sans", sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  color: #2b2724;
+}
+.arch-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 5px;
+  font-size: 11.5px;
+  color: #8e8576;
+}
+.arch-meta .dot {
+  color: #d9d2c5;
+}
+.arch-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex: 0 0 auto;
 }

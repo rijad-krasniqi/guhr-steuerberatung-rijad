@@ -51,3 +51,16 @@ export const PAUSED_COLUMN: ColumnId = "paus";
 
 /** Mandate types offered in the detail panel's selector. */
 export const MANDATE_TYPES = Object.keys(MANDATE) as MandateType[];
+
+/** All advisor ids, for assignment dropdowns and the "acting as" switcher. */
+export const MEMBER_IDS = Object.keys(MEMBERS) as MemberId[];
+
+/** Look up a phase's display title by id. */
+export function columnTitle(id: ColumnId): string {
+  return COLUMNS.find((c) => c.id === id)?.title ?? id;
+}
+
+/** Friendly advisor name, or "Unassigned" for null. */
+export function memberLabel(member: MemberId | null): string {
+  return member ? MEMBERS[member].name : "Unassigned";
+}
