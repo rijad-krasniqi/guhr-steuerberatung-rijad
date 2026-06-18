@@ -193,20 +193,6 @@ select:focus {
   margin-top: -1px;
 }
 
-.linklike {
-  background: none;
-  border: none;
-  color: #b0a693;
-  font-size: 12px;
-  cursor: pointer;
-  padding: 0;
-  text-decoration: underline;
-  text-underline-offset: 2px;
-}
-.linklike:hover {
-  color: #8e8576;
-}
-
 /* ---- Board -------------------------------------------------------------- */
 
 .board {
@@ -686,23 +672,6 @@ select:focus {
   font-weight: 600;
 }
 
-.btn-secondary {
-  background: #fff;
-  color: #7c6f55;
-  border: 1px solid #e2d9c8;
-  border-radius: 22px;
-  padding: 8px 15px;
-  font-family: "Work Sans", sans-serif;
-  font-weight: 600;
-  font-size: 13px;
-  cursor: pointer;
-  transition: background 0.15s, border-color 0.15s;
-}
-.btn-secondary:hover {
-  background: #f6f2e9;
-  border-color: #d8cdb6;
-}
-
 .btn-ghost {
   background: transparent;
   color: #8e8576;
@@ -1141,4 +1110,103 @@ select:focus {
   align-items: center;
   gap: 4px;
   flex: 0 0 auto;
+}
+
+/* ---- Overflow menu (secondary header actions) -------------------------- */
+
+.menu {
+  position: relative;
+  flex: 0 0 auto;
+}
+.menu__trigger {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid #e2d9c8;
+  background: #fff;
+  color: #7c6f55;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s, border-color 0.15s;
+}
+.menu__trigger:hover {
+  background: #f6f2e9;
+  border-color: #d8cdb6;
+}
+.menu__list {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 176px;
+  background: #fff;
+  border: 1px solid #e7e1d6;
+  border-radius: 10px;
+  box-shadow: 0 12px 30px rgba(40, 30, 10, 0.16);
+  padding: 6px;
+  z-index: 30;
+  animation: fadeIn 0.12s ease;
+}
+.menu__item {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: none;
+  border-radius: 7px;
+  padding: 9px 11px;
+  font-size: 13px;
+  color: #3a352e;
+  cursor: pointer;
+}
+.menu__item:hover {
+  background: #f6f2e9;
+}
+.menu__item--danger {
+  color: #c25b4e;
+}
+.menu__item--danger:hover {
+  background: #fbf1f0;
+}
+
+/* ---- Responsive header --------------------------------------------------
+ * Shed the lowest-value chrome first as the window narrows, so the essential
+ * controls (filter, acting-as, New inquiry, overflow menu) always fit. */
+.header__brand {
+  min-width: 0;
+}
+.header__right {
+  min-width: 0;
+}
+.picker__select {
+  min-width: 0;
+}
+
+@media (max-width: 1180px) {
+  .picker__caption {
+    display: none;
+  }
+}
+@media (max-width: 1000px) {
+  .header__stats,
+  .header__right .header__divider {
+    display: none;
+  }
+  .header__right {
+    gap: 10px;
+  }
+  .picker__select {
+    max-width: 120px;
+  }
+}
+@media (max-width: 720px) {
+  .header__titles {
+    display: none;
+  }
+  .header {
+    padding: 14px 16px;
+  }
 }
